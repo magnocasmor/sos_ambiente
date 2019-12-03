@@ -39,7 +39,6 @@ class _MainScreenState extends State<MainScreen> {
                   hintText: 'Procurar...',
                   // contentPadding: const EdgeInsets.all(8.0),
                   isDense: true,
-
                 ),
                 expands: false,
                 maxLines: 1,
@@ -61,6 +60,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: PageView(
         controller: pageController,
+        physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           ReportMapScreen(),
           AddReportScreen(
