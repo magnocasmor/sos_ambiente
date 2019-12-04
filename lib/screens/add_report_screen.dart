@@ -1,14 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 
-class AddReportScreen extends StatelessWidget {
+class AddReportScreen extends StatefulWidget {
   final VoidCallback onReportCompleted;
+
   AddReportScreen({
     Key key,
     @required this.onReportCompleted,
   }) : super(key: key);
+
+  @override
+  _AddReportScreenState createState() => _AddReportScreenState();
+}
+
+class _AddReportScreenState extends State<AddReportScreen> {
+  final _userlocation = Location();
 
   final listKey = GlobalKey<AnimatedListState>();
 
@@ -21,6 +31,14 @@ class AddReportScreen extends StatelessWidget {
 
   final photos = [];
 
+  GoogleMapController _controller;
+
+  Marker _marker;
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     String selectedType = types.first;
@@ -32,6 +50,47 @@ class AddReportScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Selecione no mapa o local do incidente'),
+            Container(
+              height: 300.0,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: FutureBuilder<LocationData>(
+                future: _userlocation.getLocation(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  final locationData = snapshot.data;
+
+                  return GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target:
+                          LatLng(locationData.latitude, locationData.longitude),
+                      zoom: 15.0,
+                    ),
+                    markers: _marker is Marker ? Set.from([_marker]) : null,
+                    myLocationButtonEnabled: true,
+                    myLocationEnabled: true,
+                    trafficEnabled: false,
+                    onTap: (latLong) {
+                      setState(
+                        () {
+                          _marker = Marker(
+                            markerId: MarkerId(
+                              latLong.toString(),
+                            ),
+                            draggable: false,
+                            position: latLong,
+                            visible: true,
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: TextFormField(
@@ -225,7 +284,8 @@ class AddReportScreen extends StatelessWidget {
                     builder: (context) {
                       return AlertDialog(
                         title: Text('Obrigado por sua ajuda!'),
-                        content: Text('O incidente foi reportado com sucesso. Aguardemos para que as devidas medidas sejam tomadas.'),
+                        content: Text(
+                            'O incidente foi reportado com sucesso. Aguardemos para que as devidas medidas sejam tomadas.'),
                         shape: RoundedRectangleBorder(),
                         actions: <Widget>[
                           FlatButton(
@@ -233,7 +293,7 @@ class AddReportScreen extends StatelessWidget {
                             textColor: Theme.of(context).primaryColor,
                             onPressed: () {
                               Navigator.of(context).pop();
-                              onReportCompleted?.call();
+                              widget.onReportCompleted?.call();
                             },
                           )
                         ],
