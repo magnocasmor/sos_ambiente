@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sos_ambiente/screens/main_screen.dart';
-import 'package:sos_ambiente/screens/report_list_screen.dart';
 import 'package:sos_ambiente/screens/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,6 +9,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -21,36 +21,57 @@ class LoginScreen extends StatelessWidget {
                   flex: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 100.0,
+                    child: SizedBox(
                       height: 100.0,
+                      width: 100.0,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/logo.png'),
+                              fit: BoxFit.contain),
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'E-mail',
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Senha',
-                    ),
-                    obscureText: true,
+                  padding: const EdgeInsets.only(
+                    bottom: 8.0,
+                    left: 8.0,
+                    right: 8.0,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'E-mail',
+                        ),
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Senha',
+                        ),
+                        obscureText: true,
+                      ),
+                    ],
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(8.0),
                   width: double.infinity,
-                  child: RaisedButton(
-                    child: Text('ENTRAR'),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
+                  child: MaterialButton(
+                    child: Text(
+                      'ENTRAR',
+                      // style: TextStyle(color: Theme.of(context).accentColor),
+                    ),
+                    color: Colors.white,
+                    textColor: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -66,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: 'Ou crie sua conta',
-                    style: TextStyle(color: Colors.blueAccent),
+                    // style: TextStyle(color: Colors.blueAccent),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.of(context).push(

@@ -58,6 +58,7 @@ class _MainScreenState extends State<MainScreen> {
             )
         ],
       ),
+      drawer: Drawer(),
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -78,37 +79,39 @@ class _MainScreenState extends State<MainScreen> {
           ReportListScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeIn,
-          );
-          searchMode = false;
-          setState(() => _currentIndex = index);
-        },
-        type: BottomNavigationBarType.fixed,
-        elevation: 6.0,
-        showUnselectedLabels: false,
-        unselectedItemColor: Theme.of(context).disabledColor,
-        selectedItemColor: Theme.of(context).primaryColor,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            title: Text(pageModels[0].title),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            activeIcon: Icon(Icons.add_circle),
-            title: Text(pageModels[1].title),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.view_list),
-            title: Text(pageModels[2].title),
-          ),
-        ],
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+            boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 3)]),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeIn,
+            );
+            searchMode = false;
+            setState(() => _currentIndex = index);
+          },
+          type: BottomNavigationBarType.fixed,
+          elevation: 3.0,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              title: Text(pageModels[0].title),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle_outline),
+              activeIcon: Icon(Icons.add_circle),
+              title: Text(pageModels[1].title),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.view_list),
+              title: Text(pageModels[2].title),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,7 +51,13 @@ class _AddReportScreenState extends State<AddReportScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Selecione no mapa o local do incidente'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Selecione no mapa o local do incidente',
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ),
             Container(
               height: 300.0,
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -67,8 +75,17 @@ class _AddReportScreenState extends State<AddReportScreen> {
                     initialCameraPosition: CameraPosition(
                       target:
                           LatLng(locationData.latitude, locationData.longitude),
-                      zoom: 15.0,
+                      zoom: 18.0,
                     ),
+                    gestureRecognizers: Set()
+                      ..add(Factory<PanGestureRecognizer>(
+                          () => PanGestureRecognizer()))
+                      ..add(Factory<ScaleGestureRecognizer>(
+                          () => ScaleGestureRecognizer()))
+                      ..add(Factory<TapGestureRecognizer>(
+                          () => TapGestureRecognizer()))
+                      ..add(Factory<VerticalDragGestureRecognizer>(
+                          () => VerticalDragGestureRecognizer())),
                     markers: _marker is Marker ? Set.from([_marker]) : null,
                     myLocationButtonEnabled: true,
                     myLocationEnabled: true,

@@ -19,9 +19,10 @@ class _ReportMapScreenState extends State<ReportMapScreen> {
   static const String OTHERS_ICON = 'assets/markers/other.png';
 
   final _userlocation = Location();
-  final _userTarget = Map<String, double>();
 
   final Set<Marker> _markers = Set<Marker>();
+
+  bool _satelitteVision = false;
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
@@ -92,11 +93,6 @@ class _ReportMapScreenState extends State<ReportMapScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -110,38 +106,50 @@ class _ReportMapScreenState extends State<ReportMapScreen> {
                 );
               final locationData = snapshot.data;
 
-              return GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(locationData.latitude, locationData.longitude),
-                  zoom: 15.0,
-                ),
-                myLocationButtonEnabled: true,
-                myLocationEnabled: true,
-                markers: _markers,
-                trafficEnabled: false,
-                // onLongPress: (latLong) {
-                //   setState(
-                //     () {
-                //       _markers.add(
-                //         Marker(
-                //           markerId: MarkerId(
-                //             latLong.toString(),
-                //           ),
-
-                //           draggable: false,
-                //           position: latLong,
-                //           visible: true,
-                //         ),
-                //       );
-                //     },
-                //   );
-                // },
+              return Stack(
+                children: <Widget>[
+                  GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target:
+                          LatLng(locationData.latitude, locationData.longitude),
+                      zoom: 15.0,
+                    ),
+                    mapType:
+                        _satelitteVision ? MapType.satellite : MapType.normal,
+                    minMaxZoomPreference: MinMaxZoomPreference(10, 18),
+                    myLocationButtonEnabled: true,
+                    myLocationEnabled: true,
+                    markers: _markers,
+                    trafficEnabled: false,
+                  ),
+                  Positioned(
+                    bottom: 8.0,
+                    right: -10.0,
+                    child: MaterialButton(
+                      padding: const EdgeInsets.all(8.0),
+                      shape: CircleBorder(),
+                      elevation: 6.0,
+                      color: Theme.of(context).primaryColor,
+                      child: Icon(
+                        Icons.layers,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _satelitteVision = !_satelitteVision;
+                        });
+                      },
+                    ),
+                  )
+                ],
               );
             },
           ),
         ),
-        SizedBox(
-          height: 60.0,
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          height: 72.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,

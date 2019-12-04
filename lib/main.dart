@@ -11,11 +11,17 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF01CA9D),
+        primaryColor: Color(0xFF4FBA46),
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
-          color: Colors.white,
-          elevation: 0.0,
+            color: Colors.white.withOpacity(0.0),
+            elevation: 0.0,
+            // textTheme: TextTheme(
+            //   title: TextStyle(color: Colors.white, fontSize: 18),
+            // ),
+            ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: UnderlineInputBorder(),
         ),
       ),
       home: LoginScreen(),
