@@ -117,14 +117,16 @@ class _ReportMapScreenState extends State<ReportMapScreen> {
                     mapType:
                         _satelitteVision ? MapType.satellite : MapType.normal,
                     minMaxZoomPreference: MinMaxZoomPreference(10, 18),
+                    compassEnabled: false,
+                    rotateGesturesEnabled: false,
                     myLocationButtonEnabled: true,
                     myLocationEnabled: true,
                     markers: _markers,
                     trafficEnabled: false,
                   ),
                   Positioned(
-                    bottom: 8.0,
-                    right: -10.0,
+                    top: 8.0,
+                    left: -10.0,
                     child: MaterialButton(
                       padding: const EdgeInsets.all(8.0),
                       shape: CircleBorder(),

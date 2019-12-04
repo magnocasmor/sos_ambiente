@@ -14,15 +14,16 @@ class App extends StatelessWidget {
         primaryColor: Color(0xFF4FBA46),
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
-            color: Colors.white.withOpacity(0.0),
-            elevation: 0.0,
-            // textTheme: TextTheme(
-            //   title: TextStyle(color: Colors.white, fontSize: 18),
-            // ),
-            ),
+          color: Colors.white.withOpacity(0.0),
+          elevation: 0.0,
+          // textTheme: TextTheme(
+          //   title: TextStyle(color: Colors.white, fontSize: 18),
+          // ),
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: UnderlineInputBorder(),
         ),
+        buttonTheme: ButtonThemeData(height: 48.0),
       ),
       home: LoginScreen(),
     );
