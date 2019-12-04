@@ -9,8 +9,10 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
           'Cadastre-se',
+          style: TextStyle(color: Colors.white),
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
@@ -28,10 +30,10 @@ class SignUpScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     padding: const EdgeInsets.only(
-                    bottom: 8.0,
-                    left: 8.0,
-                    right: 8.0,
-                  ),
+                      bottom: 8.0,
+                      left: 8.0,
+                      right: 8.0,
+                    ),
                     child: Column(
                       children: <Widget>[
                         TextFormField(
@@ -61,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                         'CADASTRAR',
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
-                      color: Theme.of(context).accentColor,
+                      color: Colors.white,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),

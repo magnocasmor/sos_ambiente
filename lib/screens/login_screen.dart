@@ -19,21 +19,15 @@ class LoginScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   flex: 2,
-                  child: Padding(
+                  child: Container(
+                    height: 100.0,
+                    width: 100.0,
                     padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 100.0,
-                      width: 100.0,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/logo.png'),
-                              fit: BoxFit.contain),
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                        ),
-                      ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
                     ),
+                    child: Image.asset('assets/logo.png'),
                   ),
                 ),
                 Container(
@@ -84,18 +78,21 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: 'Ou crie sua conta',
-                    // style: TextStyle(color: Colors.blueAccent),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ),
-                        );
-                      },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Ou crie sua conta',
+                      // style: TextStyle(color: Colors.blueAccent),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SignUpScreen(),
+                            ),
+                          );
+                        },
+                    ),
                   ),
                 ),
                 Spacer(),
